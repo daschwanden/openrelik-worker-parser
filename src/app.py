@@ -1,4 +1,4 @@
-# Copyright 2024 Google LLC
+# Copyright 2025 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -23,5 +23,11 @@ if os.getenv("OPENRELIK_PYDEBUG") == "1":
     start_debugger()
 
 REDIS_URL = os.getenv("REDIS_URL")
-celery = Celery(broker=REDIS_URL, backend=REDIS_URL, include=["src.tasks"])
+celery = Celery(
+    broker=REDIS_URL,
+    backend=REDIS_URL,
+    include=[
+        "src.elf_task",
+        "src.macho_task"]
+)
 redis_client = redis.Redis.from_url(REDIS_URL)

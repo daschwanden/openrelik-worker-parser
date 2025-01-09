@@ -1,8 +1,8 @@
 [tool.poetry]
-name = "openrelik-worker-template"
-version = "2024.11.27"
+name = "openrelik-worker-parser"
+version = "2025.01.09"
 description = "Description of the worker"
-authors = ["YOUR NAME <email@example.com>"]
+authors = ["Dan Aschwanden <daschwanden@google.com>"]
 readme = "README.md"
 package-mode = false
 
@@ -10,6 +10,10 @@ package-mode = false
 python = "^3.10"
 celery = {extras = ["redis"], version = "^5.4.0"}
 openrelik-worker-common = "^2024.11.27"
+asn1crypto = { version = ">= 0.24.0" }
+lief = { version = ">= 0.15.1" }
+pyssdeep = { version = "1.0.0" }
+py-tlsh = { version = ">= 4.7.2" }
 
 [build-system]
 requires = ["poetry-core"]

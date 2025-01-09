@@ -7,7 +7,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 # Install poetry and any other dependency that your worker needs.
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    python3-poetry \
+    python3-poetry g++-aarch64-linux-gnu build-essential python3-dev \
     # Add your dependencies here
     && rm -rf /var/lib/apt/lists/*
 
@@ -28,13 +28,13 @@ WORKDIR /openrelik
 
 # Copy poetry toml and install dependencies
 COPY ./pyproject.toml ./poetry.lock .
-RUN poetry install --no-interaction --no-ansi
+RUN poetry lock; poetry install --no-interaction --no-ansi
 
 # Copy files needed to build
 COPY . ./
 
 # Install the worker and set environment to use the correct python interpreter.
-RUN poetry install && rm -rf $POETRY_CACHE_DIR
+RUN poetry lock; poetry install && rm -rf $POETRY_CACHE_DIR
 ENV VIRTUAL_ENV=/app/.venv PATH="/openrelik/.venv/bin:$PATH"
 
 # Default command if not run from docker-compose (and command being overidden)
